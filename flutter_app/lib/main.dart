@@ -19,6 +19,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//Main Menu
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -142,7 +144,7 @@ class PageOneState extends State<PageOne> {
   void _generateRandomNumber() {
     setState(() {
       _randomNumber =
-          Random().nextInt(100); // Generates a random number between 0 and 99
+          Random().nextInt(10000); // Generates a random number between 0 and 99
     });
   }
 
@@ -157,24 +159,34 @@ class PageOneState extends State<PageOne> {
           ),
         ),
         backgroundColor: Colors.purple,
+        leading: IconButton(
+          icon: Icon(Icons.home),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
       ),
       backgroundColor:
           Colors.purple, // Set the Scaffold background color to purple
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Card(
-              color: const Color.fromARGB(255, 211, 153, 250), // Lavender color
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12), // Rounded corners
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
+        child: Container(
+          width: 500, // Set a fixed width for the card
+          child: Card(
+            color: const Color.fromARGB(255, 211, 153, 250), // Lavender color
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12), // Rounded corners
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  // Only show the button if no room code is generated
+                  if (_randomNumber == null) ...[
                     ElevatedButton(
                       onPressed: _generateRandomNumber,
                       style: ElevatedButton.styleFrom(
@@ -189,62 +201,66 @@ class PageOneState extends State<PageOne> {
                       child: Text('Generate Room Code'),
                     ),
                     SizedBox(height: 20),
-                    if (_randomNumber != null) ...[
-                      Text(
-                        'Room Code: $_randomNumber',
-                        style: TextStyle(fontSize: 24),
-                      ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PageThree()),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.purple, // Text color
-                          backgroundColor: Colors.white, // Button color
-                          minimumSize: Size(200, 50), // Size of the button
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(12), // Rounded corners
-                          ),
-                        ),
-                        child: Text('Go to Room'),
-                      ),
-                      SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text('iMessage'),
-                          ),
-                          SizedBox(width: 10),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text('WhatsApp'),
-                          ),
-                          SizedBox(width: 10),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text('Telegram'),
-                          ),
-                          SizedBox(width: 10),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text('Mail'),
-                          ),
-                        ],
-                      ),
-                    ],
                   ],
-                ),
+                  if (_randomNumber != null) ...[
+                    Text(
+                      'Room Code: $_randomNumber',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PageThree()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.purple, // Text color
+                        backgroundColor: Colors.white, // Button color
+                        minimumSize: Size(200, 50), // Size of the button
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(12), // Rounded corners
+                        ),
+                      ),
+                      child: Text('Go to Room'),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Share the code with friends.',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text('iMessage'),
+                        ),
+                        SizedBox(width: 10),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text('WhatsApp'),
+                        ),
+                        SizedBox(width: 10),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text('Telegram'),
+                        ),
+                        SizedBox(width: 10),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text('Mail'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -285,6 +301,15 @@ class PageTwoState extends State<PageTwo> {
           ),
         ),
         backgroundColor: Colors.purple,
+        leading: IconButton(
+          icon: Icon(Icons.home),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
       ),
       backgroundColor:
           Colors.purple, // Set the Scaffold background color to purple
@@ -315,11 +340,32 @@ class PageTwoState extends State<PageTwo> {
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PageThree()),
-                      );
+                      // Check if the text field is not empty
+                      if (_controller.text.isNotEmpty) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PageThree()),
+                        );
+                      } else {
+                        // Show a dialog or snackbar if the input is empty
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content:
+                                Text('Please enter a code before submitting.'),
+                          ),
+                        );
+                      }
                     },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.purple, // Text color
+                      backgroundColor:
+                          Color.fromARGB(255, 244, 240, 246), // Lavender color
+                      minimumSize: Size(double.infinity, 50), // Button width
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(12), // Rounded corners
+                      ),
+                    ),
                     child: Text('Submit'),
                   ),
                 ],
@@ -382,18 +428,28 @@ class PageThreeState extends State<PageThree> {
           ),
         ),
         backgroundColor: Colors.purple,
+        leading: IconButton(
+          icon: Icon(Icons.home),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
       ),
+      backgroundColor: Colors.purple, // Set the background color to purple
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // Card containing TextField and Buttons
+            // Left Card: Square and Small
             Container(
-              width: 300, // Set the width of the square
-              height: 300, // Set the height of the square
+              width: 300, // Width of the square card
+              height: 300, // Height of the square card
               child: Card(
-                color:
-                    const Color.fromARGB(255, 211, 153, 250), // Lavender color
+                color: Colors.white, // Card color white
                 elevation: 4, // Shadow for card appearance
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12), // Rounded corners
@@ -415,84 +471,78 @@ class PageThreeState extends State<PageThree> {
                       // Add Option Button
                       ElevatedButton(
                         onPressed: _addOption,
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.purple, // Button text color
+                          backgroundColor: Color.fromARGB(
+                              255, 211, 153, 250), // Lavender button color
+                          minimumSize:
+                              Size(double.infinity, 50), // Button width
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(12), // Rounded corners
+                          ),
+                        ),
                         child: Text('Add Option'),
                       ),
                       SizedBox(height: 20),
                       // Randomize Button
                       ElevatedButton(
                         onPressed: _randomizeOption,
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.purple, // Button text color
+                          backgroundColor: Color.fromARGB(
+                              255, 211, 153, 250), // Lavender button color
+                          minimumSize:
+                              Size(double.infinity, 50), // Button width
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(12), // Rounded corners
+                          ),
+                        ),
                         child: Text('Randomize'),
                       ),
+                      SizedBox(height: 20),
+                      // Display the selected option
+                      if (_selectedOption != null)
+                        Text(
+                          'Selected Option: $_selectedOption',
+                          style: TextStyle(fontSize: 18),
+                        ),
                     ],
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            // Display the selected option
-            if (_selectedOption != null)
-              Text(
-                'Selected Option: $_selectedOption',
-                style: TextStyle(fontSize: 18),
-              ),
-            SizedBox(height: 20),
-            // List of options
+            SizedBox(width: 20), // Space between the cards
+            // Right Card: Longer
             Expanded(
-              child: ListView.builder(
-                itemCount: _options.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(_options[index]),
-                  );
-                },
+              child: Container(
+                height: 300, // Height of the card
+                child: Card(
+                  color: Colors.white, // Card color white
+                  elevation: 4, // Shadow for card appearance
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // Rounded corners
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: _options.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(_options[index]),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-//SharePage
-
-class SharePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Share',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Colors.purple,
-      ),
-      backgroundColor: Colors.purple,
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('iMessage'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('WhatsApp'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('Telegram'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('Mail'),
             ),
           ],
         ),
