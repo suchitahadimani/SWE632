@@ -1,203 +1,325 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'dart:math';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
-      child: MaterialApp(
-        title: 'Namer App',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 241, 199, 186)),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Navigation Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Decisions Decisions...',
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
-        home: MyHomePage(),
+        backgroundColor: Colors.purple,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PageOne()),
+                );
+              },
+              child: Text('Create Room'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PageTwo()),
+                );
+              },
+              child: Text('Join Room'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PageThree()),
+                );
+              },
+              child: Text('Random Selector'),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
-
-  var favorites = <WordPair>[];
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-    notifyListeners();
-  }
-}
-
-class MyHomePage extends StatefulWidget {
+class PageOne extends StatefulWidget {
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _PageOneState createState() => _PageOneState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  var selectedIndex = 0;
+class _PageOneState extends State<PageOne> {
+  int? _randomNumber;
+
+  void _generateRandomNumber() {
+    setState(() {
+      _randomNumber = Random().nextInt(100); // Generates a random number between 0 and 99
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget page;
-    switch (selectedIndex) {
-      case 0:
-        page = GeneratorPage();
-        break;
-      case 1:
-        page = LikePage();
-        break;
-      default:
-        throw UnimplementedError('no widget for $selectedIndex');
-    }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Create Room',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.purple,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: _generateRandomNumber,
+              child: Text('Generate Room Code'),
+            ),
+            SizedBox(height: 20),
+            if (_randomNumber != null)
+              Text(
+                'Room Code: $_randomNumber',
+                style: TextStyle(fontSize: 24),
+              ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => SharePage()),
+                );
+              }, 
+              child: Text('Share Code'))
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-    return LayoutBuilder(builder: (context, constraints) {
-      return Scaffold(
-        body: Row(
-          children: [
-            SafeArea(
-              child: NavigationRail(
-                extended: constraints.maxWidth >= 600,
-                destinations: [
-                  NavigationRailDestination(
-                    icon: Icon(Icons.home),
-                    label: Text('Home'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.favorite),
-                    label: Text('Favorites'),
-                  ),
-                ],
-                selectedIndex: selectedIndex,
-                onDestinationSelected: (value) {
-                  setState(() {
-                    selectedIndex = value;
-                  });
-                },
+class PageTwo extends StatefulWidget {
+  @override
+  _PageTwoState createState() => _PageTwoState();
+}
+
+class _PageTwoState extends State<PageTwo> {
+  final TextEditingController _controller = TextEditingController();
+  String? _enteredCode;
+
+  void _submitCode() {
+    setState(() {
+      _enteredCode = _controller.text;
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // Dispose the controller when not needed
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Join Room',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.purple,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              controller: _controller,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Enter Code',
               ),
             ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _submitCode,
+              child: Text('Submit'),
+            ),
+            SizedBox(height: 20),
+            if (_enteredCode != null)
+              Text(
+                'Joining Room...',
+                style: TextStyle(fontSize: 18),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PageThree extends StatefulWidget {
+  @override
+  _PageThreeState createState() => _PageThreeState();
+}
+
+class _PageThreeState extends State<PageThree> {
+  final TextEditingController _optionController = TextEditingController();
+  List<String> _options = [];
+  String? _selectedOption;
+
+  void _addOption() {
+    if (_optionController.text.isNotEmpty) {
+      setState(() {
+        _options.add(_optionController.text);
+        _optionController.clear();
+      });
+    }
+  }
+
+  void _randomizeOption() {
+    if (_options.length >= 2) {
+      setState(() {
+        _selectedOption = _options[Random().nextInt(_options.length)];
+      });
+    } else {
+      setState(() {
+        _selectedOption = 'Please enter at least two options.';
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _optionController.dispose(); // Dispose the controller when not needed
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Random Selector',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.purple,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              controller: _optionController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Enter an Option',
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _addOption,
+              child: Text('Add Option'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _randomizeOption,
+              child: Text('Randomize'),
+            ),
+            SizedBox(height: 20),
+            if (_selectedOption != null)
+              Text(
+                'Selected Option: $_selectedOption',
+                style: TextStyle(fontSize: 18),
+              ),
+            SizedBox(height: 20),
             Expanded(
-              child: Container(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                child: page,
+              child: ListView.builder(
+                itemCount: _options.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(_options[index]),
+                  );
+                },
               ),
             ),
           ],
         ),
-      );
-    });
-  }
-}
-
-class LikePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-
-    if (appState.favorites.isEmpty) {
-      return Center(
-        child: Text('No favorites yet.'),
-      );
-    }
-
-    return ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Text('You have '
-              '${appState.favorites.length} favorites:'),
-        ),
-        for (var pair in appState.favorites)
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text(pair.asLowerCase),
-          ),
-      ],
-    );
-  }
-}
-
-class GeneratorPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
-
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BigCard(pair: pair),
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: Text('Like'),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Next'),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }
 }
 
-class BigCard extends StatelessWidget {
-  const BigCard({
-    super.key,
-    required this.pair,
-  });
-
-  final WordPair pair;
-
+class SharePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final style = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onPrimary,
-    );
-
-    return Card(
-      color: theme.colorScheme.primary,
-      child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Text(pair.asLowerCase,
-            style: style, semanticsLabel: "${pair.first} ${pair.second}"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Share',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.purple,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('iMessage'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('WhatsApp'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('Telegram'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('Mail'),
+            ),
+          ],
+        ),
       ),
     );
   }
