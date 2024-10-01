@@ -138,7 +138,20 @@ class PageOne extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Room'),
+        title: Text(
+          'Create Room',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.purple,
+        leading: IconButton(
+          icon: Icon(Icons.home),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
       ),
       backgroundColor: Colors.purple,
       body: Center(
@@ -250,6 +263,27 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
     }
   }
 
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Success'),
+          content: Text(
+              'Code successfully shared. (Pretend it shares cuz we don\'t have a backend for this project)'),
+          actions: [
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -262,7 +296,20 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Room Code Creation'),
+        title: Text(
+          'Create Room',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.purple,
+        leading: IconButton(
+          icon: Icon(Icons.home),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
       ),
       backgroundColor: Colors.purple,
       body: Center(
@@ -355,7 +402,9 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            _showSuccessDialog();
+                          },
                           icon: Image.asset(
                             'assets/imessage.png',
                             height: 20,
@@ -369,7 +418,9 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                         ),
                         SizedBox(width: 10),
                         ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            _showSuccessDialog();
+                          },
                           icon: Image.asset(
                             'assets/WhatsApp_icon.png',
                             height: 20,
@@ -383,7 +434,9 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                         ),
                         SizedBox(width: 10),
                         ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            _showSuccessDialog();
+                          },
                           icon: Image.asset(
                             'assets/Telegram_icon.png',
                             height: 20,
@@ -397,7 +450,9 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                         ),
                         SizedBox(width: 10),
                         ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            _showSuccessDialog();
+                          },
                           icon: Image.asset(
                             'assets/mail.png',
                             height: 20,
