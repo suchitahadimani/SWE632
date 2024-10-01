@@ -596,7 +596,8 @@ class PageThreeState extends State<PageThree> {
   final TextEditingController _optionController = TextEditingController();
   List<String> _options = [];
   String? _selectedOption;
-  int? _editingIndex; // To track if we are editing a specific option
+  int? _editingIndex;
+  final FocusNode _focusNode = FocusNode();
 
   // Add or edit option in the list
   void _addOrEditOption() {
@@ -615,6 +616,7 @@ class PageThreeState extends State<PageThree> {
       }
     }
     _optionController.clear();
+    _focusNode.requestFocus();
   }
 
   // Edit the option at the given index
@@ -648,7 +650,8 @@ class PageThreeState extends State<PageThree> {
 
   @override
   void dispose() {
-    _optionController.dispose(); // Dispose the controller when not needed
+    _optionController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -695,6 +698,7 @@ class PageThreeState extends State<PageThree> {
                       // TextField
                       TextField(
                         controller: _optionController,
+                        focusNode: _focusNode,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: _editingIndex == null
@@ -703,6 +707,20 @@ class PageThreeState extends State<PageThree> {
                         ),
                         onSubmitted: (_) =>
                             _addOrEditOption(), // Submit option with Enter key
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed:
+                            _addOrEditOption, // Call the same function as Enter key
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.purple,
+                          backgroundColor: Color.fromARGB(255, 211, 153, 250),
+                          minimumSize: Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text('Submit'), // Text for the button
                       ),
                       SizedBox(height: 20),
                       // Randomize Button
@@ -722,8 +740,14 @@ class PageThreeState extends State<PageThree> {
                       // Display the selected option
                       if (_selectedOption != null)
                         Text(
-                          'Selected Option: $_selectedOption',
+                          'Selected Option:',
                           style: TextStyle(fontSize: 18),
+                        ),
+                      if (_selectedOption != null)
+                        Text(
+                          _selectedOption!,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                     ],
                   ),
