@@ -28,106 +28,158 @@ class HomePage extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/title.png'), // Path to your PNG file
-            fit: BoxFit.cover, // Ensures the image covers the whole screen
+            image: AssetImage('assets/title.png'),
+            fit: BoxFit.cover,
           ),
         ),
         child: Center(
-          child: Column(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // Create Room Card
-              Card(
-                color: const Color.fromARGB(255, 211, 153, 250),
-                elevation: 5, // Add some elevation for shadow effect
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12), // Rounded corners
+              // Individual User Box
+              Container(
+                width: 200,
+                height: 210,
+                padding: EdgeInsets.all(16),
+                margin: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
                 ),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PageOne()),
-                    );
-                  },
-                  child: Container(
-                    width: 200, // Set a fixed width for the card
-                    padding:
-                        EdgeInsets.all(16), // Add some padding inside the card
-                    child: Center(
-                      child: Text(
-                        'Create Room',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors
-                              .purple, // Set text color to match the theme
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      'Individual',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    Card(
+                      color: const Color.fromARGB(255, 211, 153, 250),
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PageThree()),
+                          );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(16),
+                          child: Center(
+                            child: Text(
+                              'Random Selector',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-              SizedBox(height: 20),
-              // Join Room Card
-              Card(
-                color: const Color.fromARGB(255, 211, 153, 250),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
+              // Group User Box
+              Container(
+                width: 200,
+                height: 210,
+                padding: EdgeInsets.all(16),
+                margin: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
                 ),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PageTwo()),
-                    );
-                  },
-                  child: Container(
-                    width: 200,
-                    padding: EdgeInsets.all(16),
-                    child: Center(
-                      child: Text(
-                        'Join Room',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.purple,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      'Group',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    Card(
+                      color: const Color.fromARGB(255, 211, 153, 250),
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PageOne()),
+                          );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(16),
+                          child: Center(
+                            child: Text(
+                              'Create Room',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              // Random Selector Card
-              Card(
-                color: const Color.fromARGB(255, 211, 153, 250),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PageThree()),
-                    );
-                  },
-                  child: Container(
-                    width: 200,
-                    padding: EdgeInsets.all(16),
-                    child: Center(
-                      child: Text(
-                        'Random Selector',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.purple,
+                    SizedBox(height: 10),
+                    Card(
+                      color: const Color.fromARGB(255, 211, 153, 250),
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PageTwo()),
+                          );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(16),
+                          child: Center(
+                            child: Text(
+                              'Join Room',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ],
@@ -137,6 +189,7 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
 
 //CREATE ROOM PAGE
 
@@ -603,19 +656,16 @@ class PageThreeState extends State<PageThree> {
   final TextEditingController _optionController = TextEditingController();
   List<String> _options = [];
   String? _selectedOption;
-  int? _editingIndex;
-  final FocusNode _focusNode = FocusNode();
+  int? _editingIndex; // To track if we are editing a specific option
 
   // Add or edit option in the list
   void _addOrEditOption() {
     if (_editingIndex != null) {
-      // Editing an existing option
       setState(() {
         _options[_editingIndex!] = _optionController.text;
         _editingIndex = null;
       });
     } else {
-      // Adding a new option
       if (_optionController.text.isNotEmpty) {
         setState(() {
           _options.add(_optionController.text);
@@ -623,22 +673,20 @@ class PageThreeState extends State<PageThree> {
       }
     }
     _optionController.clear();
-    _focusNode.requestFocus();
   }
 
   // Edit the option at the given index
   void _editOption(int index) {
     setState(() {
-      _optionController.text =
-          _options[index]; // Pre-fill the input with the option
-      _editingIndex = index; // Mark which option is being edited
+      _optionController.text = _options[index];
+      _editingIndex = index;
     });
   }
 
   // Delete the option at the given index
   void _deleteOption(int index) {
     setState(() {
-      _options.removeAt(index); // Remove the option from the list
+      _options.removeAt(index);
     });
   }
 
@@ -658,7 +706,6 @@ class PageThreeState extends State<PageThree> {
   @override
   void dispose() {
     _optionController.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 
@@ -705,31 +752,16 @@ class PageThreeState extends State<PageThree> {
                       // TextField
                       TextField(
                         controller: _optionController,
-                        focusNode: _focusNode,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: _editingIndex == null
                               ? 'Enter an Option'
                               : 'Edit Option',
                         ),
-                        onSubmitted: (_) =>
-                            _addOrEditOption(), // Submit option with Enter key
+                        onSubmitted: (_) => _addOrEditOption(),
                       ),
                       SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed:
-                            _addOrEditOption, // Call the same function as Enter key
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.purple,
-                          backgroundColor: Color.fromARGB(255, 211, 153, 250),
-                          minimumSize: Size(double.infinity, 50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: Text('Submit'), // Text for the button
-                      ),
-                      SizedBox(height: 20),
+                      // Randomize Button
                       ElevatedButton(
                         onPressed: _randomizeOption,
                         style: ElevatedButton.styleFrom(
@@ -746,14 +778,8 @@ class PageThreeState extends State<PageThree> {
                       // Display the selected option
                       if (_selectedOption != null)
                         Text(
-                          'Selected Option:',
+                          'Selected Option: $_selectedOption',
                           style: TextStyle(fontSize: 18),
-                        ),
-                      if (_selectedOption != null)
-                        Text(
-                          _selectedOption!,
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                     ],
                   ),
@@ -776,31 +802,41 @@ class PageThreeState extends State<PageThree> {
                     child: Column(
                       children: <Widget>[
                         Expanded(
-                          child: ListView.builder(
-                            itemCount: _options.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(_options[index]),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    // Edit Button
-                                    IconButton(
-                                      icon: Icon(Icons.edit,
-                                          color: Colors.purple),
-                                      onPressed: () => _editOption(index),
+                          child: _options.isEmpty
+                              ? Center(
+                                  child: Text(
+                                    'What to eat?\nOption #1: Pizza\nOption #2: Sushi\nOption #3: Burgers',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey,
+                                      fontStyle: FontStyle.italic,
                                     ),
-                                    // Delete Button
-                                    IconButton(
-                                      icon:
-                                          Icon(Icons.delete, color: Colors.red),
-                                      onPressed: () => _deleteOption(index),
-                                    ),
-                                  ],
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              : ListView.builder(
+                                  itemCount: _options.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title: Text(_options[index]),
+                                      trailing: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          // Edit Button
+                                          IconButton(
+                                            icon: Icon(Icons.edit, color: Colors.purple),
+                                            onPressed: () => _editOption(index),
+                                          ),
+                                          // Delete Button
+                                          IconButton(
+                                            icon: Icon(Icons.delete, color: Colors.red),
+                                            onPressed: () => _deleteOption(index),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                          ),
                         ),
                       ],
                     ),
@@ -814,6 +850,7 @@ class PageThreeState extends State<PageThree> {
     );
   }
 }
+
 
 //Onboarding Pages
 
