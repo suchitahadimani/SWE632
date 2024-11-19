@@ -29,6 +29,7 @@ flutter:
     - assets/darttitle.png
     - assets/dartbackground.png
     - assets/title.png
+    - assets/create_room2.png
+    - assets/join_room2.png
+    - assets/random.png
     
-
-
