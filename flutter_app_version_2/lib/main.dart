@@ -1156,10 +1156,12 @@ class _OnboardingPageState extends State<OnboardingPagePresenter> {
                             );
                           },
                           child: Container(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0, vertical: 8.0),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              shape: BoxShape.circle,
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(25),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.3),
@@ -1168,10 +1170,24 @@ class _OnboardingPageState extends State<OnboardingPagePresenter> {
                                 ),
                               ],
                             ),
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: widget.pages[_currentPage].textColor,
-                              size: 24,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.arrow_back,
+                                  color: widget
+                                      .pages[_currentPage].buttontextColor,
+                                  size: 24,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  'Back',
+                                  style: TextStyle(
+                                    color: widget
+                                        .pages[_currentPage].buttontextColor,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -1193,10 +1209,12 @@ class _OnboardingPageState extends State<OnboardingPagePresenter> {
                           }
                         },
                         child: Container(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8.0),
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            shape: BoxShape.circle,
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(25),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.3),
@@ -1205,12 +1223,28 @@ class _OnboardingPageState extends State<OnboardingPagePresenter> {
                               ),
                             ],
                           ),
-                          child: Icon(
-                            _currentPage == widget.pages.length - 1
-                                ? Icons.check
-                                : Icons.arrow_forward,
-                            color: widget.pages[_currentPage].textColor,
-                            size: 24,
+                          child: Row(
+                            children: [
+                              Text(
+                                _currentPage == widget.pages.length - 1
+                                    ? 'Finish'
+                                    : 'Next',
+                                style: TextStyle(
+                                  color: widget
+                                      .pages[_currentPage].buttontextColor,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Icon(
+                                _currentPage == widget.pages.length - 1
+                                    ? Icons.check
+                                    : Icons.arrow_forward,
+                                color:
+                                    widget.pages[_currentPage].buttontextColor,
+                                size: 24,
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -1225,10 +1259,12 @@ class _OnboardingPageState extends State<OnboardingPagePresenter> {
                             widget.onSkip(_pageController);
                           },
                           child: Container(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0, vertical: 8.0),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              shape: BoxShape.circle,
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(25),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.3),
@@ -1237,10 +1273,24 @@ class _OnboardingPageState extends State<OnboardingPagePresenter> {
                                 ),
                               ],
                             ),
-                            child: Icon(
-                              Icons.skip_next,
-                              color: widget.pages[_currentPage].textColor,
-                              size: 24,
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Skip',
+                                  style: TextStyle(
+                                    color: widget
+                                        .pages[_currentPage].buttontextColor,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Icon(
+                                  Icons.skip_next,
+                                  color: widget
+                                      .pages[_currentPage].buttontextColor,
+                                  size: 24,
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -1262,11 +1312,13 @@ class OnboardingPageModel {
   final String imageUrl;
   final Color bgColor;
   final Color textColor;
+  final Color buttontextColor;
 
   OnboardingPageModel(
       {required this.title,
       required this.description,
       required this.imageUrl,
       this.bgColor = Colors.blue,
-      this.textColor = Colors.white});
+      this.textColor = Colors.white,
+      this.buttontextColor = Colors.black});
 }
