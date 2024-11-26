@@ -919,28 +919,7 @@ class PageThreeState extends State<PageThree> {
       _options.removeAt(index);
     });
   }
-
-  // Randomize and select an option
-  // void _randomizeOption() {
-  //   if (_options.length >= 2) {
-  //     setState(() {
-  //       // Randomly pick a phrase
-  //       _randomPhrase = [
-  //         "Your mysterious pick is:",
-  //         "Drum roll please!",
-  //         "Looks like the fates have picked:",
-  //         "You are destined for:",
-  //       ][Random().nextInt(4)]; // Randomly select a phrase
-  //       _selectedOption = _options[Random().nextInt(_options.length)];
-  //     });
-  //   } else {
-  //     setState(() {
-  //       _selectedOption = 'Please enter at least two options.';
-  //       _randomPhrase = null; // No phrase if less than 2 options
-  //     });
-  //   }
-  // }
-
+  
   @override
   void dispose() {
     _optionController.dispose();
