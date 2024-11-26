@@ -211,7 +211,8 @@ class PageOne extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/create_room2.png'), // Update with your file path
+                image: AssetImage(
+                    'assets/create_room2.png'), // Update with your file path
                 fit: BoxFit.cover,
               ),
             ),
@@ -246,6 +247,20 @@ class PageOne extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.all(8),
+                            color: const Color.fromARGB(255, 211, 153, 250),
+                            child: Text(
+                              'Step 1/2',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 5),
                           Text(
                             'Choose an Option to Create Room:',
                             style: TextStyle(
@@ -294,18 +309,6 @@ class PageOne extends StatelessWidget {
                             child: Text('Create Custom Code'),
                           ),
                         ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 10,
-                    right: 10,
-                    child: Text(
-                      'Step 1/2',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -391,19 +394,21 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
 
   @override
   Widget build(BuildContext context) {
-  return Scaffold(
-    body: Stack(
-      children: [
-        // Background Image
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/create_room2.png'), // Replace with your image path
-              fit: BoxFit.cover, // This will make the image cover the entire background
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Background Image
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    'assets/create_room2.png'), // Replace with your image path
+                fit: BoxFit
+                    .cover, // This will make the image cover the entire background
+              ),
             ),
           ),
-        ),
-        Positioned(
+          Positioned(
             top: 10,
             left: 10,
             child: IconButton(
@@ -416,192 +421,195 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
               },
             ),
           ),
-        // Main content
-        Center(
-          child: Container(
-            width: 600,
-            child: Stack(
-              children: [
-                // Card with content
-                Card(
-                  color: const Color.fromARGB(255, 211, 153, 250),
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        if (widget.isRandom && _randomNumber != null) ...[
-                          // Display random generated room code
-                          Text(
-                            'Generated Room Code: $_randomNumber',
-                            style: TextStyle(fontSize: 24),
-                          ),
-                          SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: _generateRandomNumber, // Regenerate random code
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.purple,
-                              backgroundColor: Colors.white,
-                              minimumSize: Size(200, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+          // Main content
+          Center(
+            child: Container(
+              width: 600,
+              child: Stack(
+                children: [
+                  // Card with content
+                  Card(
+                    color: const Color.fromARGB(255, 211, 153, 250),
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          if (widget.isRandom && _randomNumber != null) ...[
+                            // Display random generated room code
+                            Text(
+                              'Generated Room Code: $_randomNumber',
+                              style: TextStyle(fontSize: 24),
+                            ),
+                            SizedBox(height: 20),
+                            ElevatedButton(
+                              onPressed:
+                                  _generateRandomNumber, // Regenerate random code
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.purple,
+                                backgroundColor: Colors.white,
+                                minimumSize: Size(200, 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
                               ),
+                              child: Text('Regenerate Code'),
                             ),
-                            child: Text('Regenerate Code'),
-                          ),
-                        ] else if (!widget.isRandom) ...[
-                          // Custom code input field
-                          Text(
-                            'Please enter up to four digits (0-9):',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 10),
-                          TextField(
-                            keyboardType: TextInputType.number,
-                            maxLength: 4,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Enter Custom Room Code',
-                              errorText: _errorMessage,
+                          ] else if (!widget.isRandom) ...[
+                            // Custom code input field
+                            Text(
+                              'Please enter up to four digits (0-9):',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                            onChanged: _validateCustomCode, // Validate as user types
-                          ),
-                        ],
-                        SizedBox(height: 20),
-                        // Show "Go to Room" button only when a code is valid
-                        if (_randomNumber != null ||
-                            (_customCode != null && _customCode!.length > 0)) ...[
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => PageThree(
-                                    roomCode:
-                                        _customCode ?? _randomNumber.toString(),
-                                    breadcrumbPath: [
-                                      'Home',
-                                      'Create Room',
-                                      'Random Generator'
-                                    ],
+                            SizedBox(height: 10),
+                            TextField(
+                              keyboardType: TextInputType.number,
+                              maxLength: 4,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Enter Custom Room Code',
+                                errorText: _errorMessage,
+                              ),
+                              onChanged:
+                                  _validateCustomCode, // Validate as user types
+                            ),
+                          ],
+                          SizedBox(height: 20),
+                          // Show "Go to Room" button only when a code is valid
+                          if (_randomNumber != null ||
+                              (_customCode != null &&
+                                  _customCode!.length > 0)) ...[
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PageThree(
+                                      roomCode: _customCode ??
+                                          _randomNumber.toString(),
+                                      breadcrumbPath: [
+                                        'Home',
+                                        'Create Room',
+                                        'Random Generator'
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.purple,
+                                backgroundColor: Colors.white,
+                                minimumSize: Size(200, 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: Text('Go to Room'),
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              'Share the code with friends.',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            SizedBox(height: 20),
+                            // Row of sharing options
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    _showSuccessDialog();
+                                  },
+                                  icon: Image.asset(
+                                    'assets/imessage.png',
+                                    height: 20,
+                                    width: 20,
+                                  ),
+                                  label: Text('iMessage'),
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.blueAccent,
                                   ),
                                 ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.purple,
-                              backgroundColor: Colors.white,
-                              minimumSize: Size(200, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
+                                SizedBox(width: 10),
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    _showSuccessDialog();
+                                  },
+                                  icon: Image.asset(
+                                    'assets/WhatsApp_icon.png',
+                                    height: 20,
+                                    width: 20,
+                                  ),
+                                  label: Text('WhatsApp'),
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.green,
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    _showSuccessDialog();
+                                  },
+                                  icon: Image.asset(
+                                    'assets/Telegram_icon.png',
+                                    height: 20,
+                                    width: 20,
+                                  ),
+                                  label: Text('Telegram'),
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.lightBlueAccent,
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    _showSuccessDialog();
+                                  },
+                                  icon: Image.asset(
+                                    'assets/mail.png',
+                                    height: 20,
+                                    width: 20,
+                                  ),
+                                  label: Text('Mail'),
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.redAccent,
+                                  ),
+                                ),
+                              ],
                             ),
-                            child: Text('Go to Room'),
-                          ),
-                          SizedBox(height: 20),
-                          Text(
-                            'Share the code with friends.',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          SizedBox(height: 20),
-                          // Row of sharing options
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  _showSuccessDialog();
-                                },
-                                icon: Image.asset(
-                                  'assets/imessage.png',
-                                  height: 20,
-                                  width: 20,
-                                ),
-                                label: Text('iMessage'),
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  backgroundColor: Colors.blueAccent,
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  _showSuccessDialog();
-                                },
-                                icon: Image.asset(
-                                  'assets/WhatsApp_icon.png',
-                                  height: 20,
-                                  width: 20,
-                                ),
-                                label: Text('WhatsApp'),
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  backgroundColor: Colors.green,
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  _showSuccessDialog();
-                                },
-                                icon: Image.asset(
-                                  'assets/Telegram_icon.png',
-                                  height: 20,
-                                  width: 20,
-                                ),
-                                label: Text('Telegram'),
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  backgroundColor: Colors.lightBlueAccent,
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  _showSuccessDialog();
-                                },
-                                icon: Image.asset(
-                                  'assets/mail.png',
-                                  height: 20,
-                                  width: 20,
-                                ),
-                                label: Text('Mail'),
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  backgroundColor: Colors.redAccent,
-                                ),
-                              ),
-                            ],
-                          ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: Text(
-                    'Step 2/2',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: Text(
+                      'Step 2/2',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
   }
 }
 
@@ -647,19 +655,21 @@ class PageTwoState extends State<PageTwo> {
 
   @override
   Widget build(BuildContext context) {
-  return Scaffold(
-    body: Stack(
-      children: [
-        // Background Image
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/join_room2.png'), // Replace with your image path
-              fit: BoxFit.cover, // Ensure the image covers the entire background
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Background Image
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    'assets/join_room2.png'), // Replace with your image path
+                fit: BoxFit
+                    .cover, // Ensure the image covers the entire background
+              ),
             ),
           ),
-        ),
-        Positioned(
+          Positioned(
             top: 10,
             left: 10,
             child: IconButton(
@@ -672,55 +682,71 @@ class PageTwoState extends State<PageTwo> {
               },
             ),
           ),
-        // Main content
-        Center(
-          child: Container(
-            width: 300,
-            height: 300,
-            child: Card(
-              color: const Color.fromARGB(255, 211, 153, 250), 
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    TextField(
-                      controller: _controller,
-                      keyboardType: TextInputType.number, // Set keyboard to number input
-                      maxLength: 4, // Limit the input to four digits
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter Room Code',
-                        errorText: _errorMessage, // Show error message if input is invalid
-                      ),
-                      onSubmitted: (_) => _submitCode(), // Submit when Enter is pressed
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _submitCode,
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.purple,
-                        backgroundColor: Color.fromARGB(255, 244, 240, 246),
-                        minimumSize: Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+          // Main content
+          Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              child: Card(
+                color: const Color.fromARGB(255, 211, 153, 250),
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Enter the code you received to join the room',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
+                        textAlign: TextAlign.center, // Center the text
                       ),
-                      child: Text('Submit'),
-                    ),
-                  ],
+                      SizedBox(
+                          height:
+                              20), // Space between instruction and input field
+                      // TextField for room code input
+                      TextField(
+                        controller: _controller,
+                        keyboardType: TextInputType
+                            .number, // Set keyboard to number input
+                        maxLength: 4, // Limit the input to four digits
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Room Code',
+                          errorText:
+                              _errorMessage, // Show error message if input is invalid
+                        ),
+                        onSubmitted: (_) =>
+                            _submitCode(), // Submit when Enter is pressed
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: _submitCode,
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.purple,
+                          backgroundColor: Color.fromARGB(255, 244, 240, 246),
+                          minimumSize: Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text('Submit'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
   }
 }
 
@@ -741,6 +767,7 @@ class PageThreeState extends State<PageThree> {
   final TextEditingController _optionController = TextEditingController();
   List<String> _options = [];
   String? _selectedOption;
+  String? _randomPhrase; // New variable for the random phrase
   int? _editingIndex;
   final FocusNode _focusNode = FocusNode();
 
@@ -786,11 +813,19 @@ class PageThreeState extends State<PageThree> {
   void _randomizeOption() {
     if (_options.length >= 2) {
       setState(() {
+        // Randomly pick a phrase
+        _randomPhrase = [
+          "You're mysterious pick is:",
+          "Drum roll please!",
+          "Looks like the fates have picked:",
+          "You are destined for:",
+        ][Random().nextInt(4)]; // Randomly select a phrase
         _selectedOption = _options[Random().nextInt(_options.length)];
       });
     } else {
       setState(() {
         _selectedOption = 'Please enter at least two options.';
+        _randomPhrase = null; // No phrase if less than 2 options
       });
     }
   }
@@ -808,8 +843,10 @@ class PageThreeState extends State<PageThree> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/random.png'), // Add your background image here
-            fit: BoxFit.cover, // This will cover the whole screen with the image
+            image: AssetImage(
+                'assets/random.png'), // Add your background image here
+            fit:
+                BoxFit.cover, // This will cover the whole screen with the image
           ),
         ),
         child: Padding(
@@ -891,6 +928,16 @@ class PageThreeState extends State<PageThree> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
+                            // Instruction Text Above the TextField
+                            Text(
+                              'Input your choices below to get started',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 20),
                             // TextField
                             TextField(
                               controller: _optionController,
@@ -905,26 +952,39 @@ class PageThreeState extends State<PageThree> {
                               onSubmitted: (_) => _addOrEditOption(),
                             ),
                             SizedBox(height: 20),
-                            // Randomize Button
+                            // Randomize Button (Make text bold)
                             ElevatedButton(
                               onPressed: _randomizeOption,
                               style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.purple,
-                                backgroundColor:
-                                    Color.fromARGB(255, 211, 153, 250),
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.deepPurple,
                                 minimumSize: Size(double.infinity, 50),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              child: Text('Make Random Selection'),
+                              child: Text(
+                                'Make Random Selection',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ),
                             SizedBox(height: 20),
-                            // Display the selected option
+                            // Display the selected option and random phrase
                             if (_selectedOption != null)
-                              Text(
-                                'Selected Option: $_selectedOption',
-                                style: TextStyle(fontSize: 18),
+                              Column(
+                                children: [
+                                  Text(
+                                    _randomPhrase ?? 'Selected Option:',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    _selectedOption!,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
                               ),
                           ],
                         ),
@@ -935,7 +995,8 @@ class PageThreeState extends State<PageThree> {
                   // Right Card: Longer
                   Expanded(
                     child: Container(
-                      height: 300,
+                      width: 300,
+                      height: 425,
                       child: Card(
                         color: Colors.white,
                         elevation: 4,
@@ -950,7 +1011,7 @@ class PageThreeState extends State<PageThree> {
                                 child: _options.isEmpty
                                     ? Center(
                                         child: Text(
-                                          'What to eat?\nOption #1: Pizza\nOption #2: Sushi\nOption #3: Burgers',
+                                          'What to eat?\nPizza\nSushi\nBurgers',
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey,
