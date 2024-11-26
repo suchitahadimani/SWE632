@@ -17,6 +17,11 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 flutter:
+  fonts:
+    - family: Static
+      fonts:
+        - asset: assets/PressStart2P-Regular.ttf
+
   uses-material-design: true
 
   # Add this section to declare the assets
@@ -32,4 +37,3 @@ flutter:
     - assets/create_room2.png
     - assets/join_room2.png
     - assets/random.png
-    
