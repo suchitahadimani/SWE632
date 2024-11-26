@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'dart:async';
 
 void main() {
   runApp(MyApp());
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Navigation Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Static',
       ),
       home: OnboardingPage1(),
     );
@@ -25,176 +27,245 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/title.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              // Individual User Box
-              Container(
-                width: 200,
-                height: 210,
-                padding: EdgeInsets.all(16),
-                margin: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      'Individual',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    Card(
-                      color: const Color.fromARGB(255, 211, 153, 250),
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PageThree(
-                                      roomCode: "Individual Mode",
-                                      breadcrumbPath: [
-                                        'Home',
-                                        'Random Generator'
-                                      ],
-                                    )),
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.all(16),
-                          child: Center(
-                            child: Text(
-                              'Random Selector',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.purple,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+      body: Stack(
+        children: [
+          // Background with Boxes
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/title.png'),
+                fit: BoxFit.cover,
               ),
-              // Group User Box
-              Container(
-                width: 200,
-                height: 210,
-                padding: EdgeInsets.all(16),
-                margin: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
+            ),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  // Individual User Box
+                  Container(
+                    width: 200,
+                    height: 210,
+                    padding: EdgeInsets.all(16),
+                    margin: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      'Group',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    Card(
-                      color: const Color.fromARGB(255, 211, 153, 250),
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => PageOne()),
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.all(16),
-                          child: Center(
-                            child: Text(
-                              'Create Room',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.purple,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                          'Individual',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 12),
+                        Card(
+                          color: const Color.fromARGB(255, 211, 153, 250),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PageThree(
+                                    roomCode: "Individual Mode",
+                                    breadcrumbPath: ['Home', 'Random Generator'],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.all(16),
+                              child: Center(
+                                child: Text(
+                                  'Random Selector',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.purple,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    SizedBox(height: 10),
-                    Card(
-                      color: const Color.fromARGB(255, 211, 153, 250),
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => PageTwo()),
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.all(16),
-                          child: Center(
-                            child: Text(
-                              'Join Room',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.purple,
+                  ),
+                  // Group User Box
+                  Container(
+                    width: 200,
+                    height: 210,
+                    padding: EdgeInsets.all(16),
+                    margin: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                          'Group',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 10),
+                        Card(
+                          color: const Color.fromARGB(255, 211, 153, 250),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PageOne()),
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.all(16),
+                              child: Center(
+                                child: Text(
+                                  'Create Room',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.purple,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
+                        SizedBox(height: 10),
+                        Card(
+                          color: const Color.fromARGB(255, 211, 153, 250),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PageTwo()),
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.all(16),
+                              child: Center(
+                                child: Text(
+                                  'Join Room',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.purple,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+
+          // Help Button in Bottom-Left
+          Positioned(
+            bottom: 16,
+            left: 16,
+            child: FloatingActionButton(
+              onPressed: () => _showHelpPopup(context),
+              child: Icon(Icons.help_outline),
+              mini: true, // Small button size
+              backgroundColor: Colors.white,
+            ),
+          ),
+        ],
       ),
+    );
+  }
+
+  void _showHelpPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          content: SizedBox(
+            height: 300,
+            child: Column(
+              children: [
+                // Header with Close Button
+                Container(
+                  color: Colors.purple,
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Instructions",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.close, color: Colors.white),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Instructions Content
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      "Welcome to the app! Here are some instructions:\n\n"
+                      "1. Use 'Random Selector' to pick items randomly.\n"
+                      "2. Use 'Create Room' to start a group activity.\n"
+                      "3. Use 'Join Room' to join an existing group.",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -254,15 +325,15 @@ class PageOne extends StatelessWidget {
                             child: Text(
                               'Step 1/2',
                               style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
+                                fontSize: 10,
+                                color: Colors.white,
                               ),
                             ),
                           ),
                           SizedBox(height: 5),
                           Text(
                             'Choose an Option to Create Room:',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
@@ -280,7 +351,7 @@ class PageOne extends StatelessWidget {
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.purple,
                               backgroundColor: Colors.white,
-                              minimumSize: Size(200, 50),
+                              minimumSize: Size(400, 50),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -301,7 +372,7 @@ class PageOne extends StatelessWidget {
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.purple,
                               backgroundColor: Colors.white,
-                              minimumSize: Size(200, 50),
+                              minimumSize: Size(400, 50), //yogi
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -435,7 +506,7 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(20.0), 
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
@@ -443,7 +514,7 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                             // Display random generated room code
                             Text(
                               'Generated Room Code: $_randomNumber',
-                              style: TextStyle(fontSize: 24),
+                              style: TextStyle(fontSize: 20),
                             ),
                             SizedBox(height: 20),
                             ElevatedButton(
@@ -452,7 +523,7 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.purple,
                                 backgroundColor: Colors.white,
-                                minimumSize: Size(200, 50),
+                                minimumSize: Size(300, 50),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -504,7 +575,7 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.purple,
                                 backgroundColor: Colors.white,
-                                minimumSize: Size(200, 50),
+                                minimumSize: Size(300, 50),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -514,7 +585,7 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                             SizedBox(height: 20),
                             Text(
                               'Share the code with friends.',
-                              style: TextStyle(fontSize: 18),
+                              style: TextStyle(fontSize: 16),
                             ),
                             SizedBox(height: 20),
                             // Row of sharing options
@@ -530,7 +601,7 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                                     height: 20,
                                     width: 20,
                                   ),
-                                  label: Text('iMessage'),
+                                  label: Text('iMessage', style: TextStyle(fontSize: 8)),
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: Colors.white,
                                     backgroundColor: Colors.blueAccent,
@@ -546,7 +617,7 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                                     height: 20,
                                     width: 20,
                                   ),
-                                  label: Text('WhatsApp'),
+                                  label: Text('WhatsApp', style: TextStyle(fontSize: 8)),
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: Colors.white,
                                     backgroundColor: Colors.green,
@@ -562,7 +633,7 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                                     height: 20,
                                     width: 20,
                                   ),
-                                  label: Text('Telegram'),
+                                  label: Text('Telegram', style: TextStyle(fontSize: 8)),
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: Colors.white,
                                     backgroundColor: Colors.lightBlueAccent,
@@ -578,7 +649,7 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                                     height: 20,
                                     width: 20,
                                   ),
-                                  label: Text('Mail'),
+                                  label: Text('Mail', style: TextStyle(fontSize: 8)),
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: Colors.white,
                                     backgroundColor: Colors.redAccent,
@@ -597,9 +668,8 @@ class _RoomCreationPageState extends State<RoomCreationPage> {
                     child: Text(
                       'Step 2/2',
                       style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        fontSize: 10,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -767,9 +837,50 @@ class PageThreeState extends State<PageThree> {
   final TextEditingController _optionController = TextEditingController();
   List<String> _options = [];
   String? _selectedOption;
-  String? _randomPhrase; // New variable for the random phrase
+  String? _randomPhrase;
   int? _editingIndex;
   final FocusNode _focusNode = FocusNode();
+  bool _isLoading = false; // To track the loading state
+  String _loadingText = ''; // For the ellipsis animation
+
+  // Randomize and select an option with animation
+  void _randomizeOption() {
+    if (_options.length >= 2) {
+      setState(() {
+        _isLoading = true; // Start loading
+        _loadingText = '.'; // Initialize the loading text
+      });
+
+      // Timer for ellipsis animation
+      int count = 0;
+      Timer.periodic(Duration(milliseconds: 300), (timer) {
+        if (count < 6) { // Adjust the duration as needed
+          setState(() {
+            _loadingText = '.' * ((count % 3) + 1); // Cycle through ., .., ...
+          });
+          count++;
+        } else {
+          timer.cancel();
+          setState(() {
+            _isLoading = false; // Stop loading
+            // Randomly pick a phrase
+            _randomPhrase = [
+              "Your mysterious pick is:",
+              "Drum roll please!",
+              "Looks like the fates have picked:",
+              "You are destined for:",
+            ][Random().nextInt(4)]; // Randomly select a phrase
+            _selectedOption = _options[Random().nextInt(_options.length)];
+          });
+        }
+      });
+    } else {
+      setState(() {
+        _selectedOption = 'Please enter at least two options.';
+        _randomPhrase = null; // No phrase if less than 2 options
+      });
+    }
+  }
 
   // Add or edit option in the list
   void _addOrEditOption() {
@@ -810,25 +921,25 @@ class PageThreeState extends State<PageThree> {
   }
 
   // Randomize and select an option
-  void _randomizeOption() {
-    if (_options.length >= 2) {
-      setState(() {
-        // Randomly pick a phrase
-        _randomPhrase = [
-          "You're mysterious pick is:",
-          "Drum roll please!",
-          "Looks like the fates have picked:",
-          "You are destined for:",
-        ][Random().nextInt(4)]; // Randomly select a phrase
-        _selectedOption = _options[Random().nextInt(_options.length)];
-      });
-    } else {
-      setState(() {
-        _selectedOption = 'Please enter at least two options.';
-        _randomPhrase = null; // No phrase if less than 2 options
-      });
-    }
-  }
+  // void _randomizeOption() {
+  //   if (_options.length >= 2) {
+  //     setState(() {
+  //       // Randomly pick a phrase
+  //       _randomPhrase = [
+  //         "Your mysterious pick is:",
+  //         "Drum roll please!",
+  //         "Looks like the fates have picked:",
+  //         "You are destined for:",
+  //       ][Random().nextInt(4)]; // Randomly select a phrase
+  //       _selectedOption = _options[Random().nextInt(_options.length)];
+  //     });
+  //   } else {
+  //     setState(() {
+  //       _selectedOption = 'Please enter at least two options.';
+  //       _randomPhrase = null; // No phrase if less than 2 options
+  //     });
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -915,7 +1026,7 @@ class PageThreeState extends State<PageThree> {
                 children: <Widget>[
                   // Left Card: Square and Small
                   Container(
-                    width: 300,
+                    width: 325,
                     height: 300,
                     child: Card(
                       color: Colors.white,
@@ -931,8 +1042,9 @@ class PageThreeState extends State<PageThree> {
                             // Instruction Text Above the TextField
                             Text(
                               'Input your choices below to get started',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
@@ -965,24 +1077,31 @@ class PageThreeState extends State<PageThree> {
                               ),
                               child: Text(
                                 'Make Random Selection',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                               ),
                             ),
                             SizedBox(height: 20),
-                            // Display the selected option and random phrase
-                            if (_selectedOption != null)
+                            if (_isLoading)
+                              Text(
+                                _loadingText,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            if (!_isLoading && _selectedOption != null)
                               Column(
                                 children: [
                                   Text(
                                     _randomPhrase ?? 'Selected Option:',
-                                    style: TextStyle(fontSize: 18),
+                                    style: TextStyle(fontSize: 12),
                                   ),
                                   SizedBox(height: 10),
                                   Text(
                                     _selectedOption!,
                                     style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
+                                        fontSize: 14, fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
@@ -996,7 +1115,7 @@ class PageThreeState extends State<PageThree> {
                   Expanded(
                     child: Container(
                       width: 300,
-                      height: 425,
+                      height: 400,
                       child: Card(
                         color: Colors.white,
                         elevation: 4,
@@ -1013,7 +1132,7 @@ class PageThreeState extends State<PageThree> {
                                         child: Text(
                                           'What to eat?\nPizza\nSushi\nBurgers',
                                           style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 12,
                                             color: Colors.grey,
                                             fontStyle: FontStyle.italic,
                                           ),
